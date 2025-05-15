@@ -19,6 +19,7 @@ import { MessageEditor } from './message-editor';
 import { DocumentPreview } from './document-preview';
 import { MessageReasoning } from './message-reasoning';
 import type { UseChatHelpers } from '@ai-sdk/react';
+import Image from 'next/image';
 
 const PurePreviewMessage = ({
   chatId,
@@ -60,10 +61,10 @@ const PurePreviewMessage = ({
           )}
         >
           {message.role === 'assistant' && (
-            <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border bg-background">
-              <div className="translate-y-px">
-                <SparklesIcon size={14} />
-              </div>
+            <div className="size-12 flex items-center rounded-full justify-center ring-1 shrink-0">
+             
+                <Image src="/images/image.jpg" alt="Blessd Icon" width={48} height={40} className="rounded-full" />
+           
             </div>
           )}
 
@@ -255,31 +256,28 @@ export const ThinkingMessage = () => {
   const role = 'assistant';
 
   return (
-    <motion.div
-      data-testid="message-assistant-loading"
-      className="w-full mx-auto max-w-3xl px-4 group/message min-h-96"
-      initial={{ y: 5, opacity: 0 }}
-      animate={{ y: 0, opacity: 1, transition: { delay: 1 } }}
-      data-role={role}
-    >
-      <div
-        className={cx(
-          'flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl',
-          {
-            'group-data-[role=user]/message:bg-muted': true,
-          },
-        )}
+    <AnimatePresence>
+      <motion.div
+        className="w-full mx-auto max-w-3xl px-4 group/message"
+        initial={{ y: 5, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
       >
-        <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
-          <SparklesIcon size={14} />
-        </div>
-
-        <div className="flex flex-col gap-2 w-full">
-          <div className="flex flex-col gap-4 text-muted-foreground">
-            Hmm...
+        <div className="flex gap-4 w-fit">
+        <div className="size-12 flex items-center rounded-full justify-center ring-1 shrink-0">
+             
+             <Image src="/images/image.jpg" alt="Blessd Icon" width={48} height={40} className="rounded-full" />
+        
+         </div>
+          <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-row gap-2 items-start">
+              <div
+                data-testid="message-content"
+                className="flex flex-col gap-4 skeleton-div rounded-xl min-w-48 h-24"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };

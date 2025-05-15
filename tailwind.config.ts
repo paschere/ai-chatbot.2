@@ -22,6 +22,12 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        'blessd-blue': '#1AF3FF',
+        'blessd-yellow': '#FFFF00',
+        'blessd-red': '#FF0033',
+        'blessd-dark': '#1A1A1A',
+        'blessd-light-blue': '#87CEEB',
+        'blessd-white': '#FFFFFF',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

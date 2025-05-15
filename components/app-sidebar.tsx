@@ -23,7 +23,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
   const { setOpenMobile } = useSidebar();
 
   return (
-    <Sidebar className="group-data-[side=left]:border-r-0">
+    <Sidebar className="group-data-[side=left]:border-r-0 bg-blessd-dark border-r border-blessd-blue">
       <SidebarHeader>
         <SidebarMenu>
           <div className="flex flex-row justify-between items-center">
@@ -34,8 +34,8 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               }}
               className="flex flex-row gap-3 items-center"
             >
-              <span className="text-lg font-semibold px-2 hover:bg-muted rounded-md cursor-pointer">
-                Chatbot
+              <span className="text-lg font-bold text-blessd-blue px-2 hover:text-blessd-yellow rounded-md cursor-pointer">
+                Blessd AI
               </span>
             </Link>
             <Tooltip>
@@ -43,7 +43,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 <Button
                   variant="ghost"
                   type="button"
-                  className="p-2 h-fit"
+                  className="p-2 h-fit text-blessd-light-blue hover:text-blessd-yellow"
                   onClick={() => {
                     setOpenMobile(false);
                     router.push('/');
@@ -53,7 +53,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   <PlusIcon />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent align="end">New Chat</TooltipContent>
+              <TooltipContent align="end">Nuevo Chat</TooltipContent>
             </Tooltip>
           </div>
         </SidebarMenu>

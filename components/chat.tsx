@@ -121,6 +121,8 @@ export function Chat({
           selectedVisibilityType={initialVisibilityType}
           isReadonly={isReadonly}
           session={session}
+          chat=""    
+          sharePath={false}
         />
 
         <Messages

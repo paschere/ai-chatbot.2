@@ -247,65 +247,55 @@ function PureMultimodalInput({
           {attachments.map((attachment) => (
             <PreviewAttachment key={attachment.url} attachment={attachment} />
           ))}
-
-          {uploadQueue.map((filename) => (
-            <PreviewAttachment
-              key={filename}
-              attachment={{
-                url: '',
-                name: filename,
-                contentType: '',
-              }}
-              isUploading={true}
-            />
+          {uploadQueue.map((fileName) => (
+            <div
+              key={fileName}
+              className="flex size-20 items-center justify-center rounded-md border border-dashed border-border"
+            >
+              <PaperclipIcon className="size-4 animate-pulse" />
+            </div>
           ))}
         </div>
       )}
 
-      <Textarea
-        data-testid="multimodal-input"
-        ref={textareaRef}
-        placeholder="Send a message..."
-        value={input}
-        onChange={handleInput}
-        className={cx(
-          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700',
-          className,
-        )}
-        rows={2}
-        autoFocus
-        onKeyDown={(event) => {
-          if (
-            event.key === 'Enter' &&
-            !event.shiftKey &&
-            !event.nativeEvent.isComposing
-          ) {
-            event.preventDefault();
-
-            if (status !== 'ready') {
-              toast.error('Please wait for the model to finish its response!');
-            } else {
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitForm();
+        }}
+        className={cx('relative flex w-full items-end', className)}
+      >
+        <PureAttachmentsButton
+          fileInputRef={fileInputRef}
+          status={status}
+        />
+        <Textarea
+          data-testid="multimodal-input"
+          ref={textareaRef}
+          name="message"
+          rows={1}
+          placeholder="Pregúntale a Blessd..."
+          value={input}
+          onInput={handleInput}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
               submitForm();
             }
-          }
-        }}
-      />
+          }}
+          className="min-h-12 resize-none pr-12 md:min-h-14 md:pr-14 focus:border-blessd-blue focus:ring-blessd-blue placeholder:text-gray-400 dark:placeholder:text-gray-500"
+        />
 
-      <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
-        <AttachmentsButton fileInputRef={fileInputRef} status={status} />
-      </div>
-
-      <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
-        {status === 'submitted' ? (
-          <StopButton stop={stop} setMessages={setMessages} />
+        {status === 'generating' ? (
+          <PureStopButton stop={stop} setMessages={setMessages} />
         ) : (
-          <SendButton
-            input={input}
+          <PureSendButton
             submitForm={submitForm}
+            input={input}
             uploadQueue={uploadQueue}
           />
         )}
-      </div>
+      </form>
     </div>
   );
 }
@@ -381,17 +371,22 @@ function PureSendButton({
   input: string;
   uploadQueue: Array<string>;
 }) {
+  const disabled = input.trim().length === 0 && uploadQueue.length === 0;
   return (
     <Button
       data-testid="send-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
-      onClick={(event) => {
-        event.preventDefault();
+      type="submit"
+      size="icon"
+      variant="ghost"
+      className="absolute right-2 top-1/2 -translate-y-1/2 bg-blessd-blue text-blessd-dark hover:bg-blessd-yellow disabled:bg-gray-500 disabled:text-white dark:disabled:text-gray-300 md:right-2.5"
+      onClick={(e) => {
+        e.preventDefault();
         submitForm();
       }}
-      disabled={input.length === 0 || uploadQueue.length > 0}
+      disabled={disabled}
+      aria-label="Send message"
     >
-      <ArrowUpIcon size={14} />
+      <ArrowUpIcon />
     </Button>
   );
 }

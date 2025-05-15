@@ -22,11 +22,16 @@ import { useRouter } from 'next/navigation';
 import { toast } from './toast';
 import { LoaderIcon } from './icons';
 import { guestRegex } from '@/lib/constants';
+import { useEffect } from 'react';
 
 export function SidebarUserNav({ user }: { user: User }) {
   const router = useRouter();
   const { data, status } = useSession();
   const { setTheme, theme } = useTheme();
+  
+  useEffect(() => {
+    setTheme('dark')
+  }, [setTheme])
 
   const isGuest = guestRegex.test(data?.user?.email ?? '');
 
@@ -60,7 +65,7 @@ export function SidebarUserNav({ user }: { user: User }) {
                   className="rounded-full"
                 />
                 <span data-testid="user-email" className="truncate">
-                  {isGuest ? 'Guest' : user?.email}
+                  {isGuest ? 'Invitado' : user?.email}
                 </span>
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
@@ -79,7 +84,7 @@ export function SidebarUserNav({ user }: { user: User }) {
               {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild data-testid="user-nav-item-auth">
+            {/* <DropdownMenuItem asChild data-testid="user-nav-item-auth">
               <button
                 type="button"
                 className="w-full cursor-pointer"
@@ -105,7 +110,7 @@ export function SidebarUserNav({ user }: { user: User }) {
               >
                 {isGuest ? 'Login to your account' : 'Sign out'}
               </button>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
