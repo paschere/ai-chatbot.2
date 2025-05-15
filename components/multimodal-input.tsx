@@ -252,7 +252,7 @@ function PureMultimodalInput({
               key={fileName}
               className="flex size-20 items-center justify-center rounded-md border border-dashed border-border"
             >
-              <PaperclipIcon className="size-4 animate-pulse" />
+              <PaperclipIcon size={14} />
             </div>
           ))}
         </div>
@@ -286,7 +286,7 @@ function PureMultimodalInput({
           className="min-h-12 resize-none pr-12 md:min-h-14 md:pr-14 focus:border-blessd-blue focus:ring-blessd-blue placeholder:text-gray-400 dark:placeholder:text-gray-500"
         />
 
-        {status === 'generating' ? (
+        {status === 'streaming' ? (
           <PureStopButton stop={stop} setMessages={setMessages} />
         ) : (
           <PureSendButton
